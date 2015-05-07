@@ -139,7 +139,8 @@ While you can write your own Formatter object, njstrace comes with a default for
 * `inspectOptions {object}` - The inspection is done using Node.js `util.inspect` method, this is an options object for that function. `default: null`
 
 **Example**
-```javascript```
+
+```js
 // Create formatter options that will write to the console, limit each argument inspect output to 100 chars,
 // color the arguments and use 4 spaces indentation
 var consoleFormatter = {
@@ -161,6 +162,7 @@ var njstrace = require('njstrace').inject({
     formatter: [consoleFormatter, fileFormatter]
 });
 ```
+
 The result of the above run would be both an output to the console and output to a "trace.out" file.
 
 ### Custom Formatter
