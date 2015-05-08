@@ -2,13 +2,13 @@
   "name": "njstrace",
   "version": "0.0.2",
   "description": "A Node.js tracing and instrumentation utility",
-  "main": "njsTrace.js",
+  "main": "njstrace.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yuvalw/njsTrace.git"
+    "url": "https://github.com/yuvalw/njstrace.git"
   },
   "keywords": [
     "trace",
@@ -21,9 +21,9 @@
   "author": "ValYouW <ValYouW@gmail.com> (http://www.ValYouW.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/yuvalw/njsTrace/issues"
+    "url": "https://github.com/yuvalw/njstrace/issues"
   },
-  "homepage": "https://github.com/yuvalw/njsTrace",
+  "homepage": "https://github.com/yuvalw/njstrace",
   "dependencies": {
     "falafel": "^0.3.1",
     "extend": "^1.2.1",

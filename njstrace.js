@@ -20,7 +20,7 @@ var DEFAULT_CONFIG = {
 
  /**
  * Creates a new instance of NJSTrace
- * @class The main class that is responsible for the entire njsTrace functionality
+ * @class The main class that is responsible for the entire njstrace functionality
  * @extends EventEmitter
  * @constructor
  */
@@ -35,7 +35,7 @@ util.inherits(NJSTrace, EventEmitter);
  * @property {string} Error - An error event
  * @property {string} Warn - A warning event
  * @example
- * njsTrace.on(NJSTrace.events.error, function() {...});
+ * njstrace.on(NJSTrace.events.error, function() {...});
  */
 NJSTrace.events = {
 	error: 'error',
@@ -58,7 +58,7 @@ Object.defineProperties(NJSTrace.prototype, {
 });
 
 /**
- * Start the njsTrace instrumentation process
+ * Start the njstrace instrumentation process
  * @param {NJSTrace.NJSConfig} [config] - A configuration object
  */
 NJSTrace.prototype.inject = function(config) {
@@ -89,7 +89,7 @@ NJSTrace.prototype.inject = function(config) {
 	this.hijackCompile();
 	this.setGlobalFunction();
 
-	this.log('njsTrace done loading...');
+	this.log('njstrace done loading...');
 	return this;
 };
 
@@ -104,7 +104,7 @@ NJSTrace.prototype.log = function() {
 	}
 
 	// Don't want to insert our prefix into args (can effect format strings), so use print which doesn't put newline.
-	this.logger.print('njsTrace: ');
+	this.logger.print('njstrace: ');
 	this.logger.write.apply(this.logger, arguments);
 };
 
@@ -137,7 +137,7 @@ NJSTrace.prototype.hijackCompile = function() {
 				content = Module.wrapper[0] + '\n' + content + Module.wrapper[1];
 			} else {
 				wrapped = false;
-				self.log('WARN !! It seems like the node.js version you are using has changed and might be incompatible with njsTrace');
+				self.log('WARN !! It seems like the node.js version you are using has changed and might be incompatible with njstrace');
 			}
 
 			try {
@@ -160,14 +160,14 @@ NJSTrace.prototype.hijackCompile = function() {
 };
 
 /**
- * Sets njsTrace tracing functions on the global context
+ * Sets njstrace tracing functions on the global context
  * @private
  */
 NJSTrace.prototype.setGlobalFunction = function() {
 	var self = this;
 
-	this.log('Setting global.__njsTraceEntry__ function');
-	global.__njsTraceEntry__ = function(args) {
+	this.log('Setting global.__njstraceEntry__ function');
+	global.__njstraceEntry__ = function(args) {
 		if (!self.config.enabled) {
 			return;
 		}
@@ -179,8 +179,8 @@ NJSTrace.prototype.setGlobalFunction = function() {
 		}
 	};
 
-	this.log('Setting global.__njsTraceExit__ function');
-	global.__njsTraceExit__ = function(args) {
+	this.log('Setting global.__njstraceExit__ function');
+	global.__njstraceExit__ = function(args) {
 		if (!self.config.enabled) {
 			return;
 		}
@@ -248,10 +248,10 @@ module.exports = new NJSTrace();
  */
 
 /**
- * The njsTrace config object
+ * The njstrace config object
  * @typedef {object} NJSTrace.NJSConfig
  *
- * @property {boolean} [enabled=true] - Whether tracing is active. Note: njsTrace will instrument the code regardless of this setting.
+ * @property {boolean} [enabled=true] - Whether tracing is active. Note: njstrace will instrument the code regardless of this setting.
  *
  * @property {string|string[]} [files=<see description>] - A glob file pattern(s) that matches the files to instrument,
  * this supports any pattern supported by "minimatch" npm module.
@@ -260,7 +260,7 @@ module.exports = new NJSTrace();
  * All file paths are processed RELATIVE to the process working directory.
  * DEFAULT = All .js files EXCLUDING everything under node_modules (['**\/*.js', '!**\/node_modules\/**'])
  *
- * @property {boolean} [wrapFunctions=true] - Whether njsTrace should wrap the injected functions with try/catch
+ * @property {boolean} [wrapFunctions=true] - Whether njstrace should wrap the injected functions with try/catch
  * NOTE: wrapping functions with try/catch prevents from v8 to optimize the function, don't use when profiling
  *
  * @property {boolean|string|NJSTrace.onLog} [logger=false] - Controls where the logger output should go
@@ -268,7 +268,7 @@ module.exports = new NJSTrace();
  * If string, a path to an output file (absolute or relative to current working dir).
  * If function, this function will be used as logger
  *
- * @property {boolean} [inspectArgs=true] - Whether njsTrace should inspect the traced functions arguments and return values
+ * @property {boolean} [inspectArgs=true] - Whether njstrace should inspect the traced functions arguments and return values
  *
  * @property {Formatter|Formatter.Config|(Formatter|Formatter.Config)[]} [formatter=undefined] - An instance of formatter to use for output.
  * if object, a configuration to the default Formatter (see {@link Formatter.Config}).
@@ -299,4 +299,3 @@ module.exports = new NJSTrace();
  * @property {Object} entryData - An object that was returned from NJSTrace.onFunctionEntry
  * @protected
  */
-

@@ -1,7 +1,7 @@
 // --- TODO: Write some real tests ---
 
-var njsTrace = require('../njsTrace.js');
-njsTrace.inject({inspectArgs: true,
+var njstrace = require('../njstrace.js');
+njstrace.inject({inspectArgs: true,
 				 logger: false,
 				 enabled: true,
 				 wrapFunctions:true,

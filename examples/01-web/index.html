@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      window.f1 = function (callback) {
+        setTimeout(function () {
+          callback('f1.a  -- after 1 sec');
+        }, 1000);
+      };
+
+      setTimeout(function () {
+        console.timeline("web-timeline");
+        window.f1(function (result) {
+          console.log('hello!');
+          console.timelineEnd();
+        });
+      }, 2000);
+    </script>
+
+  </body>
+</html>

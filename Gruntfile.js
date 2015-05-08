@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 		clean: ['doc'],
 		jsdoc : {
 			dist : {
-				src: ['njsTrace.js'],
+				src: ['njstrace.js'],
 				jsdoc: 'node_modules/.bin/jsdoc',
 				options: {
 					destination: 'doc',

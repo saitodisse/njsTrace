@@ -4,3 +4,4 @@ doc
 *.sh
 .idea
 .codio
+*.cpuprofile

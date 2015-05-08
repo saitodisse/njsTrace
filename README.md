@@ -1,4 +1,4 @@
-# njsTrace - Instrumentation and Tracing
+# njstrace - Instrumentation and Tracing
 
 **(alpha)**
 
