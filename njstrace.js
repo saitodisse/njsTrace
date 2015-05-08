@@ -109,6 +109,15 @@ NJSTrace.prototype.log = function() {
 };
 
 /**
+ * Save result to file
+ * @param {...(string|number|object)} arguments
+ * @private
+ */
+NJSTrace.prototype.save = function(filename) {
+	this.tracer.save(filename);
+};
+
+/**
  * Hijack Node.js Module._compile method and inject the tracing stuff...
  * @private
  */
