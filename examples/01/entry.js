@@ -7,13 +7,13 @@ var no_node_modules = '!' + path.join(rel, '**', 'node_modules', '**');
 require('../../njstrace').inject({
   files: [source_files, no_node_modules],
   formatter: {
-    // stdout: 'trace_result.json',
-    onEntryCallback: function (result_json) {
-      /**/console.log('\n>>---------\n result_json:\n', require('util').inspect(result_json, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/
-    },
-    onExitCallback: function (result_json) {
-      /**/console.log('\n>>---------\n result_json:\n', require('util').inspect(result_json, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/
-    },
+    stdout: 'trace_result.json',
+    // onEntryCallback: function (result_json) {
+    //   /**/console.log('\n>>---------\n result_json:\n', require('util').inspect(result_json, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/
+    // },
+    // onExitCallback: function (result_json) {
+    //   /**/console.log('\n>>---------\n result_json:\n', require('util').inspect(result_json, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/
+    // },
   }
 });
 
