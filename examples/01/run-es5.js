@@ -8,10 +8,10 @@ runAndSaveES5(function (file_path) {
 
   /**/console.log('\n>>---------\n data:\n', require('util').inspect(data, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/
 
-  var min_moment_date = analyser.min(data);
+  var min_moment_date = analyser.minDate(data);
   console.log('min_moment_date:', min_moment_date.toISOString());
 
-  var max_moment_date = analyser.max(data);
+  var max_moment_date = analyser.maxDate(data);
   console.log('max_moment_date:', max_moment_date.toISOString());
 
   var grouped = analyser.byId(data);

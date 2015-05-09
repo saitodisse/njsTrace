@@ -7,17 +7,17 @@ module.exports = function runAndSave() {
 
   // execute code
   var f1 = require('../example-code/f1');
-  // var f2 = require('../example-code/f2');
+  var f2 = require('../example-code/f2');
   var wait = require('../example-code/wait');
-  // var print = require('../example-code/print');
+  var print = require('../example-code/print');
 
   // run
   return f1()
-    // .then(print)
+    .then(print)
     .then(wait.wait500)
-    // .then(f2)
-    // .then(print)
-    // .then(wait.wait200)
+    .then(f2)
+    .then(print)
+    .then(wait.wait200)
     .then(function () {
       // save
       var save_path = path.join(__dirname, 'TRACE_RESULT.json');
