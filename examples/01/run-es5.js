@@ -13,4 +13,8 @@ runAndSaveES5(function (file_path) {
 
   var max_moment_date = analyser.max(data);
   console.log('max_moment_date:', max_moment_date.toISOString());
+
+  var grouped = analyser.byId(data);
+  /**/console.log('\n>>---------\n grouped:\n', require('util').inspect(grouped, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/
+
 });
