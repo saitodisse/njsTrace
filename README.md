@@ -1,13 +1,26 @@
 # njstrace - Instrumentation and Tracing
 
+## Why this fork
+
+I want to return just a json, nothing formated.
+I dont't want the arguments and the function return;
+
+
 **(alpha)**
 
 njstrace lets you easily instrument and trace you code, see all function calls, arguments, return values, as well as the time spent in each function.
 
+
+
 ## Installation
+
 `npm install njstrace`
 
+
+
+
 ## Example
+
 To start tracing with the default settings just require njstrace and call its inject method.
 ```javascript
 var njstrace = require('njstrace').inject();
@@ -17,6 +30,7 @@ Lets take a look at the following 2 files dummy "app":
 
 
 **main.js**
+
 ```javascript
 // *** main.js ***
 var njstrace = require('njstrace').inject(),
@@ -61,7 +75,11 @@ The njstrace output of this silly app would be like that
 <-- MyMod.run@c:\temp\tracedemo\mymod.js::17, ts: 4, retLine: 20, retVal:
 ```
 
+
+
+
 ## How it works?
+
 Once `njstrace.inject()` is called njstrace "hijacks" node.js `Module._compile()` method, this method is called whenever a module is being "required", njstrace instrument the required module code, and then calls to the original `Module._compile()` with the instrumented code. The instrumentation just adds calls to njstrace tracing methods at the beginning of each function, at the end of each function, and before any `return` statement.
 
 All these calls to njstrace tracing methods should be totally neutral and should not affect your code logic, it will however (obviously), affect the runtime performance of your code, hence it is recommended to run with tracing ONLY when debugging (there is a possibility to run with njstrace disabled and enable it when necessary, see configuration explanation below).
@@ -84,7 +102,8 @@ NOTE: All file paths are processed **relative** to the process working directory
 also have to be relative to the working directory. If you are not running your app from the "root" of your app
 (i.e running from a sub-direcotry "node ../server.js"), you will not be able to use the default glob patterns, a solution
 could be to use something like that:
-```javascript
+
+```js
 var path = require('path');
 
 // Get the relative path from the working directory to the directory of the main app file
@@ -111,9 +130,13 @@ var njstrace = require('njstrace').inject({files: [alljs, noNodeMods]}),
     * if object, a configuration to the default Formatter (see its options in the Formatters section below).
     * if Array, a list of formatters to use, or a list of configurations for the default formatter (can be mixed, so if two configuration objects are provided, two default formatters would be created with the given config).
 
+
+
 ### enabled {boolean}
+
 Gets or sets whether njstrace is enabled or not. This let you start your application with instrumented code, but delay start the actual tracing (say start the tracing only after a specific event etc).
-```javascript
+
+```js
 // Start njstrace disabled (instrument the code but tracing is not active)
 var njstrace = require('njstrace').inject({enabled: false});
 // And somewhere later in the code activate the tracing
@@ -121,9 +144,12 @@ njstrace.enabled = true;
 ```
 
 ## Formatters
+
 njstrace uses formatters to write the tracing output, it can use multiple formatters so in a single run several files in different formats would be written. The formatters that njstrace will use are configured using the `formatter` property on the configuration object passed to the `inject()` method.
 
+
 ### Default Formatter
+
 While you can write your own Formatter object, njstrace comes with a default formatter which can be configured using an object with the following properties:
 * `stdout {boolean|string|function}` - Controls where the output should go. `default: true`
     * If Boolean, indicates whether the formatter will write output (**to the console**) or not.
@@ -202,7 +228,8 @@ Writing a custom formatter is easy, all you have to do is write a "class" that i
 Creating a simple formatter that writes to the console.
 
 **main.js**
-```javascript
+
+```sh
 // *** main.js ***
 
 // Get a reference to njstrace default Formatter class
@@ -237,7 +264,8 @@ setInterval(function(){
 }, 1000);
 ```
 **b.js**
-```javascript```
+
+```js
 // *** b.js ***
 function doFoo() {
     console.log('fooing');
@@ -248,8 +276,10 @@ exports.foo = function() {
     doFoo();
 }
 ```
+
 And the console output is:
-```
+
+```sh
 Got call to exports.foo@c:\temp\tracedemo\b.js::7, num of args: 0, stack location: 2
 Got call to doFoo@c:\temp\tracedemo\b.js::2, num of args: 0, stack location: 3
 fooing
@@ -263,6 +293,7 @@ Exit from exports.foo@c:\temp\tracedemo\b.js::7, had exception: false, exit line
 ...
 ...
 ```
+
 ##What's next?
 I started this project as an experiment, next I would want to see if I can create some GUI that will parse the tracing
 output and display it nicely (forks are welcomed as I don't see myself getting to this :)).

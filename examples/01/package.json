@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^2.9.25",
+    "fs-extra": "^0.18.3",
+    "glob": "^5.0.5",
     "moment": "^2.10.2",
     "ramda": "^0.13.0"
   }
