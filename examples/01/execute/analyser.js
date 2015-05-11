@@ -33,9 +33,13 @@ module.exports = {
     return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
   },
 
-  getChalkFunc: function(id) {
+  getChalkFuncByHash: function(id) {
     var stringHash = require('string-hash');
     var hash_number_id = stringHash(id);
+    return this.getNextChalkFunc(hash_number_id);
+  },
+
+  getNextChalkFunc: function(index) {
     var all_colors = [
       chalk.red,
       chalk.green,
@@ -47,7 +51,7 @@ module.exports = {
       // chalk.gray,
     ];
 
-    return all_colors[hash_number_id % all_colors.length];
+    return all_colors[index % all_colors.length];
   },
 
   printTimespan: function (data, total) {
@@ -70,7 +74,7 @@ module.exports = {
         stack_size = item.stack.length - 1;
       }
 
-      colorFunc = this.getChalkFunc(item.file + stack_size);
+      colorFunc = this.getChalkFuncByHash(sid);
 
       // var indentation = '';
       // for (var i_ident = 0; i_ident < stack_size; i_ident++) {
@@ -82,32 +86,43 @@ module.exports = {
       if (i > 0) {
         timespan = item.date - data[i - 1].date;
         timespan_percent = (timespan / total) * 100;
-        timespan = timespan / 1000;
       }
 
       // format numbers
-      timespan = this.format(timespan, 3, 3, ',', '.');
       timespan_percent = this.format(timespan_percent, 2, 3, ',', '.');
+
+      var timespan_color_func = chalk.gray;
+      if (        timespan_percent < 1 ) {
+        timespan_color_func = chalk.gray;
+      } else if ( timespan_percent >= 1 && timespan_percent < 2 ) {
+        timespan_color_func = chalk.white;
+      } else if ( timespan_percent >= 2 && timespan_percent < 3 ) {
+        timespan_color_func = chalk.yellow;
+      } else if ( timespan_percent >= 3 ) {
+        timespan_color_func = chalk.red;
+      }
 
       all_results.push([
         '  ' + stack_size,
-        sid.substring(0, 3),
+        colorFunc(sid.substring(0, 3)),
         colorFunc(filename + ':' + item.line),
         colorFunc(item.name),
         item.direction,
-        timespan,
-        timespan_percent + '%'
+        timespan_color_func(moment(item.date).format('ss:SSS')),
+        timespan_color_func(timespan),
+        timespan_color_func(timespan_percent + '%'),
       ]);
     }
 
     all_results.unshift([
       'stack',
-      'sid',
+      colorFunc('sid'),
       colorFunc('filename'),
       colorFunc('name'),
       'direction',
-      'ts',
-      '(%)'
+      timespan_color_func('date'),
+      timespan_color_func('ts'),
+      timespan_color_func(''),
     ]);
 
     var t = table(all_results, { align: [
@@ -116,8 +131,9 @@ module.exports = {
           'l',
           'l',
           'c',
+          ':',
           '.',
-          '.'
+          '.',
         ]
       }
     );
@@ -126,4 +142,27 @@ module.exports = {
 
   },
 
+  printIdTime: function (data) {
+
+    var grouped = this.byId(data);
+    var this_getChalkFunc = this.getChalkFuncByHash;
+    R.mapObj(function (item) {
+
+      var item_obj = {
+        name: item[0].name,
+        file: item[0].file,
+        line: item[0].line,
+        args: item[0].args,
+        stack: item[0].stack,
+        sid: item[0].sid,
+        direction: item[0].direction,
+        date: item[0].date,
+        ts: item[1].date - item[0].date
+      };
+
+      var colorFunc = this_getChalkFunc(item_obj.sid);
+      console.log(colorFunc(item_obj.sid), item_obj.date);
+    }, grouped);
+
+  },
 };

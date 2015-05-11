@@ -26,10 +26,9 @@ var main = BB.coroutine(function* () {
   console.log('total time ellapsed:', total, 'ms');
 
   // var grouped = analyser.byId(data);
-  // /**/console.log('\n>>---------\n grouped:\n', require('util').inspect(grouped, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/
 
   analyser.printTimespan(data, total);
-  // /**/console.log('\n>>---------\n timespans:\n', require('util').inspect(timespans, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/
+  //analyser.printIdTime(data);
 
 });
 
