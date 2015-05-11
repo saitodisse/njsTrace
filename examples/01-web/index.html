@@ -4,6 +4,7 @@
   </head>
   <body>
     <script type="text/javascript">
+      console.timeline("web-timeline");
       window.f1 = function (callback) {
         setTimeout(function () {
           callback('f1.a  -- after 1 sec');
@@ -11,7 +12,6 @@
       };
 
       setTimeout(function () {
-        console.timeline("web-timeline");
         window.f1(function (result) {
           console.log('hello!');
           console.timelineEnd();

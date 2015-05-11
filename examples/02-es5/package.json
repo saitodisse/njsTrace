@@ -1,0 +1,25 @@
+{
+  "name": "01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "analyse-json.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^2.9.25",
+    "chalk": "^1.0.0",
+    "extend": "^2.0.1",
+    "fs-extra": "^0.18.3",
+    "glob": "^5.0.5",
+    "moment": "^2.10.2",
+    "ramda": "^0.13.0",
+    "string-hash": "^1.1.0",
+    "text-table": "^0.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.3.7"
+  }
+}

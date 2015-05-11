@@ -1,5 +1,5 @@
 var fs = require('fs');
-var runAndSaveES5 = require('./execute/run-and-save-es5');
+var runAndSaveES5 = require('./execute/run-and-save');
 var analyser = require('./execute/analyser');
 
 runAndSaveES5(function (file_path) {

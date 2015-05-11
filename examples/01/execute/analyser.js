@@ -59,7 +59,7 @@ module.exports = {
 
       var item = data[i];
 
-      // var sid = item.sid;
+      var sid = item.sid;
       // var date = moment(item.date).toISOString();
       var timespan = 0;
       var timespan_percent = 0;
@@ -91,6 +91,7 @@ module.exports = {
 
       all_results.push([
         '  ' + stack_size,
+        sid.substring(0, 3),
         colorFunc(filename + ':' + item.line),
         colorFunc(item.name),
         item.direction,
@@ -101,6 +102,7 @@ module.exports = {
 
     all_results.unshift([
       'stack',
+      'sid',
       colorFunc('filename'),
       colorFunc('name'),
       'direction',
@@ -108,7 +110,18 @@ module.exports = {
       '(%)'
     ]);
 
-    var t = table(all_results, { align: [ 'c', 'l', 'l', 'c', '.', '.' ] });
+    var t = table(all_results, { align: [
+          'c',
+          'c',
+          'l',
+          'l',
+          'c',
+          '.',
+          '.'
+        ]
+      }
+    );
+
     console.log(t);
 
   },

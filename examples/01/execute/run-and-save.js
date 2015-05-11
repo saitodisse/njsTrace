@@ -6,18 +6,10 @@ module.exports = function runAndSave() {
   var njstrace = require('../../../njstrace').inject({ files: [source_files] });
 
   // execute code
-  var f1 = require('../example-code/f1');
-  var f2 = require('../example-code/f2');
-  var wait = require('../example-code/wait');
-  var print = require('../example-code/print');
+  var main = require('../example-code/main');
 
-  // run
-  return f1()
-    .then(print)
-    .then(wait.wait500)
-    .then(f2)
-    .then(print)
-    .then(wait.wait200)
+  // all
+  return main()
     .then(function () {
       // save
       var save_path = path.join(__dirname, 'TRACE_RESULT.json');
@@ -26,5 +18,7 @@ module.exports = function runAndSave() {
     })
     .catch(function (err) {
       throw err;
-    });
+    })
+  ;
+
 };
