@@ -23,7 +23,7 @@ var main = BB.coroutine(function* () {
   console.log('max_moment_date:', max_moment_date.toISOString());
 
   var total = max_moment_date - min_moment_date;
-  console.log('total:', total, 'ms');
+  console.log('total time ellapsed:', total, 'ms');
 
   // var grouped = analyser.byId(data);
   // /**/console.log('\n>>---------\n grouped:\n', require('util').inspect(grouped, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/

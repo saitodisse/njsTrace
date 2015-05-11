@@ -1,6 +1,7 @@
 var R = require('ramda');
 var moment = require('moment');
 var table = require('text-table');
+var chalk = require('chalk');
 
 // analiser
 module.exports = {
@@ -32,13 +33,33 @@ module.exports = {
     return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
   },
 
+  getChalkFunc: function(id) {
+    var stringHash = require('string-hash');
+    var hash_number_id = stringHash(id);
+    var all_colors = [
+      chalk.red,
+      chalk.green,
+      chalk.yellow,
+      chalk.blue,
+      chalk.magenta,
+      chalk.cyan,
+      // chalk.white,
+      // chalk.gray,
+    ];
+
+    return all_colors[hash_number_id % all_colors.length];
+  },
+
   printTimespan: function (data, total) {
     var all_results = [];
+    var colorFunc = null;
+
+
     for (var i = 0; i < data.length; i++) {
 
       var item = data[i];
 
-      var sid = item.sid;
+      // var sid = item.sid;
       // var date = moment(item.date).toISOString();
       var timespan = 0;
       var timespan_percent = 0;
@@ -48,6 +69,9 @@ module.exports = {
       if (item.direction === 'in') {
         stack_size = item.stack.length - 1;
       }
+
+      colorFunc = this.getChalkFunc(item.file + stack_size);
+
       // var indentation = '';
       // for (var i_ident = 0; i_ident < stack_size; i_ident++) {
       //   indentation += ' ';
@@ -56,9 +80,9 @@ module.exports = {
       var filename = item.file.replace(/^.*[\\\/]/, '');
 
       if (i > 0) {
-        timespan = item.date - data[i-1].date;
+        timespan = item.date - data[i - 1].date;
         timespan_percent = (timespan / total) * 100;
-        timespan = timespan/1000;
+        timespan = timespan / 1000;
       }
 
       // format numbers
@@ -66,21 +90,26 @@ module.exports = {
       timespan_percent = this.format(timespan_percent, 2, 3, ',', '.');
 
       all_results.push([
-        stack_size,
-        // sid,
-        filename + ':' + item.line,
-        item.name,
+        '  ' + stack_size,
+        colorFunc(filename + ':' + item.line),
+        colorFunc(item.name),
         item.direction,
-        timespan + ' sec',
+        timespan,
         timespan_percent + '%'
       ]);
     }
 
-    /**/console.log('\n>>---------\n all_results:\n', require('util').inspect(all_results, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/
-    var t = table(all_results, { align: [ 'l', 'l', 'l', 'l', 'r', 'r' ] });
+    all_results.unshift([
+      'stack',
+      colorFunc('filename'),
+      colorFunc('name'),
+      'direction',
+      'ts',
+      '(%)'
+    ]);
+
+    var t = table(all_results, { align: [ 'c', 'l', 'l', 'c', '.', '.' ] });
     console.log(t);
-    //
-    // /**/console.log('\n>>---------\n data:\n', require('util').inspect(data, { showHidden: false, depth: null, colors: true }), '\n>>---------\n');/*-debug-*/
 
   },
 
