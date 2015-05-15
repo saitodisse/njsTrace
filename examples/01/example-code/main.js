@@ -11,34 +11,28 @@ module.exports = function main() {
   // 01
   var promise1 = f1()
     .then(print)
-    .then(wait.wait200)
-    .then(f1)
-    .then(print)
     .then(wait.wait100)
+    .then(f1)
+    .then(wait.wait100)
+    .then(print)
+    .then(f2)
+    .then(print)
+    .then(f2)
+    .then(print)
   ;
   all_promises.push(promise1);
 
-  // 02
-  var promise2 = f2()
-    .then(print)
-    .then(wait.wait200)
-    .then(f2)
+  // 02 - sync with f1() promise part
+  var promise2 = f3()
+    .then(wait.wait100)
     .then(print)
     .then(wait.wait100)
+    .then(f3)
+    .then(print)
   ;
   all_promises.push(promise2);
 
-  // 02
-  var promise3 = f3()
-    .then(print)
-    .then(wait.wait200)
-    .then(f3)
-    .then(print)
-    .then(wait.wait100)
-  ;
-  all_promises.push(promise3);
-
-  // all
+  // run all async
   return Promise.all(all_promises);
 
 };

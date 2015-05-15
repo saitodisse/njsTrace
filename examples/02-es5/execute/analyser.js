@@ -91,7 +91,7 @@ module.exports = {
 
       colorFunc = this.getChalkFuncByHash(sid);
 
-      var filename = item.file.replace(/^.*[\\\/]/, '');
+      var filename = item.file;//.replace(/^.*[\\\/]/, '');
 
       if (i > 0) {
         timespan = item.date - data[i - 1].date;

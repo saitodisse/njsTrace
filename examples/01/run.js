@@ -4,6 +4,7 @@ var BB = require('bluebird');
 var runAndSave = require('./execute/run-and-save');
 var fileUtils = require('./execute/file-utils');
 var analyser = require('./execute/analyser');
+var chalk = require('chalk');
 
 var main = BB.coroutine(function* () {
 
@@ -28,7 +29,17 @@ var main = BB.coroutine(function* () {
   // var grouped = analyser.byId(data);
 
   analyser.printTimespan(data, total);
-  //analyser.printIdTime(data);
+  console.log('\n\n');
+  var result = analyser.printIdTime(data, total);
+  analyser.printaTable(result, [
+    ['c', 'stack'],
+    ['c', chalk.gray('sid')],
+    ['l', chalk.gray('filename')],
+    ['l', chalk.gray('name')],
+    [':', chalk.gray('date')],
+    ['r', chalk.gray('ts')],
+    ['.', chalk.gray('%.%')],
+  ]);
 
 });
 

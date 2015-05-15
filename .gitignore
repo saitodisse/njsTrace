@@ -5,3 +5,4 @@ doc
 .idea
 .codio
 *.cpuprofile
+TRACE_RESULT.*
